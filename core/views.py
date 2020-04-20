@@ -4,7 +4,8 @@ from .models import Item
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from random import shuffle
+from django.core.paginator import Paginator
 
 app_name = 'core'
 
@@ -24,39 +25,31 @@ class CategoryView(ListView):
     model = Item
     context_object_name = 'items'
     template_name = 'core/category.html'
-    # paginate_by = 1
+    # paginate_by = 2
+
+    def get_context_data(self, **kwargs):
+        context = super(CategoryView, self).get_context_data(**kwargs)
+        objects = Item.objects.filter(category='C') 
+        animals = Item.objects.filter(category='A')
+
+        crop_page = Paginator(objects, 3)
+        crop_pagination = crop_page.page(1)
+
+        animal_page = Paginator(animals, 3)
+        animal_pagination = animal_page.page(1)
+
+        context['crops'] = objects 
+        context['crop_items'] = crop_pagination
+        context['animal_items'] = animal_pagination
+
+        return context
 
     def get_queryset(self):
-        queryset = {
-            'animals': Item.objects.all().filter(category='A'),
-            'crops': Item.objects.all().filter(category='C')
-        }
+        # b = list()
+        # x = (b)
+        animal_objects = Item.objects.filter(category='A')
+        queryset = animal_objects
         return queryset
-
-# def category(request):
-#     queryset_list = {
-#                 'animals': Item.objects.filter(category='A'),
-#                 'crops': Item.objects.filter(category='C')
-#             }
-#     paginator = Paginator(queryset_list, 1)
-#
-#     page = request.GET.get('page')
-#     try:
-#         queryset = paginator.page(page)
-#     except PageNotAnInteger:
-#         # If page is not an integer deliver the first page
-#         queryset = paginator.page(1)
-#     except EmptyPage:
-#         # If page is out of range deliver last page of results
-#         queryset = paginator.page(paginator.num_pages)
-#
-#     context = {
-#         'object': queryset,
-#         'title':  'List'
-#     }
-#
-#     return render(request, 'core/category.html', context)
-
 
 # view for single product page
 class ItemDetailView(LoginRequiredMixin, DetailView):
