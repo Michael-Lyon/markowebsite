@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (index, contact, signupPage, loginPage,
-                    logoutPage, CategoryView, ItemDetailView, about)
+                    logoutPage, CategoryView, ItemDetailView, AnimalView, CropView, about)
 
 
 app_name = 'core'
@@ -14,6 +14,8 @@ urlpatterns = [
     path('signup/', signupPage, name='signup'),
     path('contact/', contact, name='contact'),
     path('category/', CategoryView.as_view(), name='category'),
+    path('animals/', AnimalView.as_view(), name='animal'),
+    path('crops/', CropView.as_view(), name='crop'),
     path('product/<slug>/', ItemDetailView.as_view(),
          name='product'),
 

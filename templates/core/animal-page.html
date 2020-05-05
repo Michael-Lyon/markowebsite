@@ -1,0 +1,40 @@
+{% extends "core/base.html" %} {% load static %} {% block content %} {% include 'core/nav.html' %}
+<main class="product__main">
+
+
+
+<section class="product-visible__card-container">
+                        {% for item in items %}
+                        <figure class="product-visible__card">
+                            <a href="{{ item.get_absolute_url }}">
+                                <img src="{{ item.image.url }}" alt="image" class="product-visible__card--image">
+                                <h3 class="heading-tertiary product-visible__card--heading">{{ item.title }}</h3>
+                            </a>
+                        </figure>
+                        {% endfor %}
+                    </section>
+
+                    <div class="pagination_container">
+
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                            <li><a href="?page={{ page_obj.previous_page_number }}">«</a></li>
+                            <li><a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number}}</a></li>
+                            {% endif %} {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number}}</a></li>
+                            <li><a href="?page={{ page_obj.next_page_number }}">»</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+       
+
+
+                    </div>
+
+
+                </div>
+                
+
+</main>
+{% include 'core/footer.html' %} {% endblock content %}

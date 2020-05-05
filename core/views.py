@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth.mixins import LoginRequiredMixin
 from random import shuffle
 from django.core.paginator import Paginator
+from .filters import ItemFilter
 
 app_name = 'core'
 
@@ -25,30 +26,31 @@ class CategoryView(ListView):
     model = Item
     context_object_name = 'items'
     template_name = 'core/category.html'
-    # paginate_by = 2
+    paginate_by = 4
+    
+    def get_queryset(self):
+        queryset = Item.objects.all()
+        return queryset
 
-    def get_context_data(self, **kwargs):
-        context = super(CategoryView, self).get_context_data(**kwargs)
-        objects = Item.objects.filter(category='C') 
-        animals = Item.objects.filter(category='A')
+class AnimalView(ListView):
+    model = Item
+    context_object_name = 'items'
+    template_name = 'core/animal-page.html'
+    paginate_by = 4
 
-        crop_page = Paginator(objects, 3)
-        crop_pagination = crop_page.page(1)
-
-        animal_page = Paginator(animals, 3)
-        animal_pagination = animal_page.page(1)
-
-        context['crops'] = objects 
-        context['crop_items'] = crop_pagination
-        context['animal_items'] = animal_pagination
-
-        return context
 
     def get_queryset(self):
-        # b = list()
-        # x = (b)
-        animal_objects = Item.objects.filter(category='A')
-        queryset = animal_objects
+        queryset = Item.objects.filter(category='A')
+        return queryset
+class CropView(ListView):
+    model = Item
+    context_object_name = 'items'
+    template_name = 'core/crop-page.html'
+    paginate_by = 4
+
+
+    def get_queryset(self):
+        queryset = Item.objects.filter(category='C')
         return queryset
 
 # view for single product page
