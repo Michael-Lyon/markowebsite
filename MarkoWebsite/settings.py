@@ -34,7 +34,8 @@ DEBUG = False
 # export DJANGO_DEBUG=False
 
 
-ALLOWED_HOSTS = ['https://markoventures.com', 'www.markoventures.com', 'markoweb.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['https://markoventures.com', 'www.markoventures.com',
+                 'markoweb.herokuapp.com', 'https://markowebsite.herokuapp.com/', '127.0.0.1']
 
 
 # Application definition
