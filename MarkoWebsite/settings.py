@@ -29,7 +29,7 @@ SECRET_KEY = 'jh8*ld%e#r+(gr5qv8ykq=^!x&-#rhmt$gc(vywxa*ca)=!^i0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+
 
 # export DJANGO_DEBUG=False
 
@@ -190,3 +190,21 @@ SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = True
 
 django_heroku.settings(locals())
+
+# Logging
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+        },
+    },
+}
